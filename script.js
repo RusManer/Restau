@@ -9,29 +9,29 @@ let carouselInterval;
 
 // ==================== CONFIGURACIÓN DE IMÁGENES ====================
 const bannerImages = {
-    pc: {
+    pc: { // Imágenes para PC
         light: ['img/blanco1.webp', 'img/blanco2.webp', 'img/blanco3.webp'],
         dark: ['img/oscuro1.webp', 'img/oscuro2.webp', 'img/oscuro3.webp']
     },
-    mobile: {
+    mobile: { // Imágenes para móviles
         light: ['img/mobil1.webp', 'img/mobil2.webp', 'img/mobil3.webp'],
         dark: ['img/mobile1.webp', 'img/mobile2.webp', 'img/mobile3.webp']
     }
 };
 
-
 // ==================== DETECTAR DISPOSITIVO ====================
 function isMobile() {
-    return window.innerWidth <= 768; // Detecta si es móvil.
+    return window.innerWidth <= 768; // Detecta si el ancho de la pantalla es de un dispositivo móvil
 }
+
 // ==================== FUNCIONES PARA EL BANNER ====================
 // Carga las imágenes dependiendo del dispositivo (PC o móvil) y modo (claro/oscuro)
 function loadBannerImages() {
-    const mode = body.classList.contains("dark") ? 'dark' : 'light'; // Modo claro/oscuro
-    const deviceType = isMobile() ? 'mobile' : 'pc'; // Móvil o PC
-    bannerContenedor.innerHTML = ''; // Limpia el contenedor
+    const mode = body.classList.contains("dark") ? 'dark' : 'light'; // Detecta el modo actual
+    const deviceType = isMobile() ? 'mobile' : 'pc'; // Selecciona el conjunto de imágenes según el dispositivo
+    bannerContenedor.innerHTML = ''; // Limpia el contenedor antes de agregar imágenes
 
-    // Carga las imágenes correspondientes
+    // Carga las imágenes correspondientes al dispositivo y modo
     images = bannerImages[deviceType][mode].map(src => {
         const img = document.createElement('img');
         img.src = src;
@@ -46,10 +46,9 @@ function loadBannerImages() {
     }
 }
 
-
 // Inicia el carrusel
 function startCarousel() {
-    stopCarousel(); // Detén cualquier carrusel previo
+    stopCarousel(); // Detenemos cualquier carrusel activo antes de iniciar uno nuevo
     carouselInterval = setInterval(() => {
         images[currentIndex].classList.remove('active');
         currentIndex = (currentIndex + 1) % images.length;
